@@ -44,8 +44,8 @@ void * firstList(List * list) {
 
 void * nextList(List * list) {
     if(list->current != NULL) list->current = list->current->next;
-    if(list->current != NULL) return list->current;
-    else return NULL;
+    if(list->current != NULL) return list->current->data;
+    return NULL;
 }
 
 void * lastList(List * list) {
@@ -66,13 +66,11 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
-    if (list == NULL || list->current == NULL) return;  // Validación de lista y current
+    if (list == NULL || list->current == NULL) return; 
     Node* new = createNode(data);
     new->prev = list->current;
-    new->next = list->current->next;
-    if (list->current->next != NULL) {  // Evita acceder a NULL
-        list->current->next->prev = new;
-    }
+    new->next = list->current->next; 
+    list->current->next->prev = new;
     list->current->next = new;
 }
 
