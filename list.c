@@ -66,11 +66,14 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
+    if (list == NULL || list->current == NULL) return;  // Validación de lista y current
     Node* new = createNode(data);
     new->prev = list->current;
     new->next = list->current->next;
-    new->prev->next = new;
-    new->next->prev = new;
+    if (list->current->next != NULL) {  // Evita acceder a NULL
+        list->current->next->prev = new;
+    }
+    list->current->next = new;
 }
 
 void * popFront(List * list) {
